@@ -1,0 +1,67 @@
+--------------------------------------
+  ____                  _       ____  
+ / ___|_ __ _   _ _ __ | |_ ___|___ \ 
+| |   | '__| | | | '_ \| __/ _ \ __) |
+| |___| |  | |_| | |_) | || (_) / __/ 
+ \____|_|   \__, | .__/ \__\___|_____|
+            |___/|_|                  
+--------------------------------------
+Ciaran McNally - Assignment 2 - 16/12/2013
+This tool was developed as a solution to my second Cryptography assignment.
+
+--/For help/--
+./run.sh -help
+
+--/Example Run/--
+./run.sh -go -f Crypto.zip
+This would generate all our signatures & value files
+for inspection.
+
+./run.sh -v -f Crypto.zip
+This would verify the file specified using the
+generated files with created with the last command.
+
+
+--/Files Generated/--
+r.hex -             File containing r signature value in hex
+s.hex -             File containing s signature value in hex
+privatekey-x.hex -  Private key
+publickey-y.hex -   Public key
+
+--/Default Files/--
+README -        This file!
+argparser.jar - Used in assignment to parse cmd-line arguments.
+Crypto2.java -  File containing assignment solution code
+run.sh -        This compiles & sets the classpath, runs
+                accepting additional cmd-line arguments.
+generator-g -   Provided Generator hex g
+prime-mod-p -   Provided Prime hex p
+
+--/Notes and Problems/--
+I had a problem where the output of my multiplicative inverse
+was negative number. After some googling a suggestion I found
+was to mod the number again which resulted in a successful
+verification.
+
+I threw an Arithmetic Exception that matched the one thrown by
+the original modInverse BigInteger function, as I developed my
+code using this first and thought it would would be a good fit. 
+This exception is thrown when no inverse exists. I catch it and
+try again. Likewise if our s = 0;
+
+I spent a full day debugging my mod_inverse function, I was getting 
+a null exception error and found it difficult to locate as it was
+within my recursive function. I Eventually realised I simply didn't 
+initialise one of my variables :( Fixed now!
+
+
+--/HELP OUTPUT/--
+Usage: ./run.sh <params>
+Ciaran McNally
+Make sure the files 'prime-mod-p' and 'generator-g' are in your dir.
+Options include:
+
+-help,-?                displays help information
+-go                     Run assignment and generate our values...
+-f,-file <string>       File to encrypt
+-v,-verify              Verify correct encryption.
